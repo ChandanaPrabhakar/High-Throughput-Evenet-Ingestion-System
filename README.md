@@ -124,10 +124,31 @@ The system includes a benchmark script under the `benchmark/` directory to evalu
 The benchmark measures:
 
 - **Throughput (requests per second)**
+
+```
+Requests/sec: 11764.5784
+```
+
 - **Latency percentiles (p50, p95, p99)**
+
+```
+p50 = 0.0083 s  (~8.3 ms)
+p95 = 0.0179 s  (~17.9 ms)
+p99 = 0.2580 s  (~258 ms)
+```
+
 - **Backpressure threshold under sustained load**
 
+```
+[200] 3614 responses
+[429] 4787 responses
+```
+
 ### Sample Results (Example)
+
+```
+{ completed: 20000, p50: 4, p95: 8, p99: 20 }
+```
 
 > Note: Actual results may vary depending on hardware configuration, disk performance, and the number of partitions.
 
@@ -196,11 +217,12 @@ curl "http://localhost:3000/consume?partition=0&offset=0"
 ## What This Teaches
 
 **This project demonstrates real backend engineering skills:**
-✔ Distributed log design
-✔ Backpressure control
-✔ Deterministic hashing & partitioning
-✔ Sequential disk I/O optimization
-✔ System tradeoff reasoning
+
+- Distributed log design
+- Backpressure control
+- Deterministic hashing & partitioning
+- Sequential disk I/O optimization
+- System tradeoff reasoning
 
 These are exactly the skills assessed in backend + system design rounds at Tier-1 tech companies.
 
