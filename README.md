@@ -22,12 +22,18 @@ Key features:
 
 ## 🧠 Architecture
 
-Producers (HTTP) --> Partition Manager --> Partition Log Files
-|
-v
-Disk (append-only)
-
-Consumers (HTTP) <-- Log Reader (offset retrieval)
+```
++-------------+      +--------------------+      +----------------+
+|  Producers  | ---> | Partition Manager  | ---> | Log Writers    |
+|  (HTTP)     |      | (hash + route)     |      | (append logs)  |
++-------------+      +--------------------+      +----------------+
+                                                        |
+                                                        v
++-------------+      +--------------------+      +----------------+
+|  Consumers  | <--- |  Log Readers       | <--- | Partition Files|
+|  (HTTP)     |      | (read by offset)   |      | on Disk        |
++-------------+      +--------------------+      +----------------+
+```
 
 Components:
 
