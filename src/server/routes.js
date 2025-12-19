@@ -1,4 +1,5 @@
 import PartitionManager from "../log/partition.js";
+import Consumer from "../core/consumer.js";
 
 const MAX_IN_FLIGHT = 1000;
 
@@ -27,5 +28,19 @@ export default async function (fastify) {
     } finally {
       inFlight--;
     }
+  });
+
+  fastify.get("/consume", async (request, reply) => {
+    const { partition, offset } = request.query;
+
+    if (partition === undefined || offset === undefined) {
+      reply.code(400).send({ error: "partition and offset required" });
+      return;
+    }
+
+    const consumer = new Consumer(Number(partition));
+    const result = await consumer.poll(Number(offset));
+
+    reply.send(result);
   });
 }
